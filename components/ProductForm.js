@@ -8,7 +8,8 @@ export default function ProductForm({
   _id,
   title: existingTitle,
   description: existingDescription,
-  price: existingPrice,
+  code: existingCode,
+  serialnumber: existingSerialnumber,
   images: existingImages,
   category: assignedCategory,
   properties: assignedProperties,
@@ -19,7 +20,8 @@ export default function ProductForm({
   const [productProperties, setProductProperties] = useState(
     assignedProperties || {}
   );
-  const [price, setPrice] = useState(existingPrice || "");
+  const [code, setCode] = useState(existingCode || "");
+  const [serialnumber, setSerialnumber] = useState(existingSerialnumber || "");
   const [images, setImages] = useState(existingImages || []);
   const [goToProducts, setGoToProducts] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -38,7 +40,8 @@ export default function ProductForm({
     const data = {
       title,
       description,
-      price,
+      code,
+      serialnumber,
       images,
       category,
       properties: productProperties,
@@ -96,7 +99,7 @@ export default function ProductForm({
 
   return (
     <form onSubmit={saveProduct}>
-      <label>Product name</label>
+      <label>Product Name</label>
       <input
         type="text"
         placeholder="product name"
@@ -124,7 +127,7 @@ export default function ProductForm({
                 onChange={(ev) => setProductProp(p.name, ev.target.value)}
               >
                 {p.values.map((v) => (
-                  <option key={value} value={v}>
+                  <option key={v} value={v}>
                     {v}
                   </option>
                 ))}
@@ -132,6 +135,20 @@ export default function ProductForm({
             </div>
           </div>
         ))}
+      <label>Product Code</label>
+      <input
+        type="text"
+        placeholder="product code"
+        value={code}
+        onChange={(ev) => setCode(ev.target.value)}
+      />
+      <label>Serial Number</label>
+      <input
+        type="text"
+        placeholder="serial number"
+        value={serialnumber}
+        onChange={(ev) => setSerialnumber(ev.target.value)}
+      />
       <label>Photos</label>
       <div className="mb-2 flex flex-wrap gap-1">
         <ReactSortable
@@ -179,13 +196,7 @@ export default function ProductForm({
         value={description}
         onChange={(ev) => setDescription(ev.target.value)}
       />
-      <label>Price (in GBP)</label>
-      <input
-        type="number"
-        placeholder="price"
-        value={price}
-        onChange={(ev) => setPrice(ev.target.value)}
-      />
+
       <button type="submit" className="btn-primary">
         Save
       </button>
