@@ -7,7 +7,7 @@ import { withSwal } from "react-sweetalert2";
 function SettingsPage({ swal }) {
   const [products, setProducts] = useState([]);
   const [featuredProductId, setFeaturedProductId] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // const [shippingFee, setShippingFee] = useState("");
   const [productsLoading, setProductsLoading] = useState(false);
   const [featuredLoading, setFeaturedLoading] = useState(false);
@@ -22,23 +22,23 @@ function SettingsPage({ swal }) {
     axios.get("/api/settings?name=featuredProductId").then((res) => {
       setFeaturedProductId(res.data.value);
       setFeaturedLoading(false);
-      // });
-      // fetchAll().then(() => {
-      //   setIsLoading(false);
+    });
+    fetchAll().then(() => {
+      setIsLoading(false);
     });
   }, []);
 
-  // async function fetchAll() {
-  //   await axios.get("/api/products").then((res) => {
-  //     setProducts(res.data);
-  //   });
-  //   await axios.get("/api/settings?name=featuredProductId").then((res) => {
-  //     setFeaturedProductId(res.data.value);
-  //   });
-  //   await axios.get("/api/settings?name=shippingFee").then((res) => {
-  //     setShippingFee(res.data.value);
-  //   });
-  // }
+  async function fetchAll() {
+    await axios.get("/api/products").then((res) => {
+      setProducts(res.data);
+    });
+    await axios.get("/api/settings?name=featuredProductId").then((res) => {
+      setFeaturedProductId(res.data.value);
+    });
+    // await axios.get("/api/settings?name=shippingFee").then((res) => {
+    //   setShippingFee(res.data.value);
+    // });
+  }
 
   async function saveSettings() {
     setIsLoading(true);
@@ -58,10 +58,10 @@ function SettingsPage({ swal }) {
     //   value: shippingFee,
     // });
     setIsLoading(false);
-    // await swal.fire({
-    //   title: "Settings saved!",
-    //   icon: "success",
-    // });
+    await swal.fire({
+      title: "Settings saved!",
+      icon: "success",
+    });
   }
 
   return (
